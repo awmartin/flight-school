@@ -1,0 +1,25 @@
+# We would like this task to run on a Linux worker
+platform: linux
+
+# The image to use for the task's container.
+# It is defined as a [resource](http://concourse.ci/concepts.html#resources) configuration.
+# image_resource:
+#   type: docker-image
+#   source: {repository: busybox}
+
+image_resource:
+  type: docker-image
+  source:
+    repository: ruby
+    tag: 2.4.1
+
+# A set of things that we need in order for our task to run
+# Here, we need the flight-school source code in order to run the tests on it.
+inputs:
+- name: flight-school
+
+# How Concourse should run the task.
+# By default Concourse will run your script with a current working directory
+# containing all of your inputs as subdirectories.
+run:
+  path: ./flight-school/ci/test.sh
